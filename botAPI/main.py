@@ -259,5 +259,8 @@ def random_text(message) -> None:
     bot.send_message(message.chat.id, "Я Вас не понимаю.\nВведите команду: /help")
 
 
+
+
+
 if __name__ == '__main__':
     bot.polling(none_stop=True)
