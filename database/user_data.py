@@ -1,4 +1,6 @@
 from datetime import datetime
+from typing import Dict, List
+
 from database.models import UserData, History
 from dictionary import dictionary as _
 
@@ -29,27 +31,27 @@ def exists_user(user_id: int) -> bool:
 
 def get_in_date(user_id: int):
     user = UserData.select().where(user_id == UserData.user_telegram_id).get()
-    return user.adults
+    return user.inDate
 
 
 def get_out_date(user_id: int):
     user = UserData.select().where(user_id == UserData.user_telegram_id).get()
-    return user.adults
+    return user.outDate
 
 
 def get_region_id(user_id: int):
     user = UserData.select().where(user_id == UserData.user_telegram_id).get()
-    return user.adults
+    return user.regionId
 
 
 def get_hotel(user_id: int):
     user = UserData.select().where(user_id == UserData.user_telegram_id).get()
-    return user.adults
+    return user.hotels_name, user.hotel_id
 
 
 def get_city(user_id: int):
     user = UserData.select().where(user_id == UserData.user_telegram_id).get()
-    return user.adults
+    return user.city_name, user.city_id
 
 
 def get_adults(user_id: int):
@@ -59,7 +61,16 @@ def get_adults(user_id: int):
 
 def get_children(user_id: int):
     user = UserData.select().where(user_id == UserData.user_telegram_id).get()
-    return user.children
+    children_list = [int(i) for i in user.children.split(', ')] if "," in user.children else int(user.children)
+    return children_list
+
+
+def set_children(user_id: int, children_list: List):
+    if len(children_list) > 1:
+        children = ", ".join(children_list)
+    else:
+        children = children_list[0]
+    UserData.update({UserData.children: children}).where(user_id == UserData.user_telegram_id).execute()
 
 
 def get_lang(user_id):
@@ -89,7 +100,7 @@ def set_cur(user_id: int, cur: str):
     UserData.update({UserData.current: cur}).where(user_id == UserData.user_telegram_id).execute()
 
 
-def set_adults(user_id: int, adults: int):
+def set_adults(user_id: int, adults: Dict):
     UserData.update({UserData.adults: adults}).where(user_id == UserData.user_telegram_id).execute()
 
 

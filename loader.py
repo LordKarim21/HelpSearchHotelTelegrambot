@@ -1,4 +1,5 @@
 from typing import Callable
+import traceback
 
 
 def exception_handler(func: Callable) -> Callable:
@@ -13,7 +14,7 @@ def exception_handler(func: Callable) -> Callable:
             result = func(*args, **kwargs)
             return result
         except Exception as e:
-            print('Что-то пошло не так! Давайте попробуем снова.', e)
+            print('Что-то пошло не так! Давайте попробуем снова.', traceback.print_exception(e))
     return wrapped_func
 
 

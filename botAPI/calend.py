@@ -6,10 +6,17 @@ from datetime import datetime
 import calendar
 import json
 
+from telebot import types
+
 
 def _get_years():
     year = datetime.now().year
-    return [i for i in range(year, year + 3)]
+    years_list = [i for i in range(year, year + 3)]
+    keyboard = types.InlineKeyboardMarkup()
+    for year in years_list:
+        key = types.InlineKeyboardButton(text=str(year), callback_data=year)
+        keyboard.add(key)
+    return keyboard
 
 
 def _valid_year(year: str):
@@ -23,10 +30,16 @@ def _valid_year(year: str):
             return False
 
 
-def _get_month():
+def _get_month(data):
     month_list = [i for i in range(1, 13)] * 2
     month = datetime.now().month
-    return [calendar.month_name[i] for i in month_list[month-1: month + 11]]
+    year = data
+    months_list = [calendar.month_name[i] for i in month_list[month-1: month + 11]]
+    keyboard = types.InlineKeyboardMarkup()
+    for month in months_list[:4]:
+        key = types.InlineKeyboardButton(text=month, callback_data=" ".join((month, year)))
+        keyboard.add(key)
+    return keyboard
 
 
 def _valid_month(value: str):

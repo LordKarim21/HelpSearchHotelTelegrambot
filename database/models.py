@@ -22,7 +22,7 @@ class UserData(BaseModel):
     current = CharField(default='')
     #  rooms:
     adults = IntegerField(null=True)
-    children = IntegerField(null=True)
+    children = CharField(null=True)
     # city and hotel
     city_name = CharField(null=True)
     city_id = IntegerField(null=True)
