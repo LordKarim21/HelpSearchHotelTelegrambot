@@ -11,6 +11,6 @@ def get_month(year=None):
     months_list = [calendar.month_name[i] for i in month_list[month-1: month + 11]]
     keyboard = InlineKeyboardMarkup()
     for month in months_list[:4]:
-        key = InlineKeyboardButton(text=month, callback_data=" ".join((month, year)))
+        key = InlineKeyboardButton(text=month, callback_data="{}-month,{}-year".format(month, year))
         keyboard.add(key)
     return keyboard

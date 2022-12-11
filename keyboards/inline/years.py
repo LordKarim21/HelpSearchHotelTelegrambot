@@ -7,6 +7,6 @@ def _get_years():
     years_list = [i for i in range(year, year + 3)]
     keyboard = InlineKeyboardMarkup()
     for year in years_list:
-        key = InlineKeyboardButton(text=str(year), callback_data=year)
+        key = InlineKeyboardButton(text=str(year), callback_data=str(year)+"years")
         keyboard.add(key)
     return keyboard
