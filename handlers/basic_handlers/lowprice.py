@@ -1,5 +1,4 @@
-from typing import Dict
-from typing import List
+from typing import Dict, List
 from telebot.types import Message
 from loader import bot
 from config_data.contact_information import User
