@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from peewee import SqliteDatabase, Model, PrimaryKeyField, IntegerField, CharField, DateField
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -7,16 +8,17 @@ my_db = SqliteDatabase(db_path)
 
 
 class BaseModel(Model):
+    id = PrimaryKeyField(unique=True, null=False, primary_key=True)
+    user_telegram_id = IntegerField()
+
     class Meta:
         database = my_db
         order_by = 'id'
 
 
 class History(BaseModel):
-    id = PrimaryKeyField(unique=True, null=False, primary_key=True)
-    user_telegram_id = IntegerField(unique=True)
-    time_request = DateField(null=True)
-    city_name = CharField(null=True)
+    time_request = DateField(default=datetime.now)
+    command_name = CharField(null=True)
     hotels_name = CharField(null=True)
 
 
@@ -25,8 +27,9 @@ def create_db() -> None:
     Функция создает базу данных, если она отсутствует.
     :return:
     """
-    with open(db_path, 'w'):
+    with my_db:
         History.create_table()
+        print("Готово")
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-from . import history
 from . import lowprice
-from . import bestdeal
+from . import best_deal
 from . import highprice
+from . import history

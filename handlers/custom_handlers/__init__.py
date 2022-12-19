@@ -1,1 +1,1 @@
-from . import survey
+from . import settings

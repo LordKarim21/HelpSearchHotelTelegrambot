@@ -12,7 +12,6 @@ HOST_API = os.getenv('HOST_API')
 DEFAULT_COMMANDS = (
     ('start', "Запустить бота"),
     ('help', "Вывести справку"),
-    ('survey', "Опрос"),
     ('history', "История поиска отелей"),
     ('lowprice', "Самые дешёвые отели в городе"),
     ('highprice', "Самые дорогие отели в городе"),
