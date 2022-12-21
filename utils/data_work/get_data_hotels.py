@@ -6,14 +6,14 @@ from datetime import datetime
 
 def get_data(message: Message) -> Dict:
     data = User.get_data_with_user(message.from_user.id)
-    if data['command'] == '':
+    if data['command'] == 'lowprice':
         sort = "PRICE_LOW_TO_HIGH"
     else:
         sort = "RECOMMENDED"
     payload = {
-        "currency": data["currency"],
+        "currency": 'USD',
         "eapid": 1,
-        "locale": data["language"],
+        "locale": 'en_US',
         "siteId": 300000001,
         "destination": {
             "regionId": str(data["region_id"])
@@ -38,8 +38,8 @@ def get_data(message: Message) -> Dict:
         "sort": sort,
         "filters": {
             "price": {
-                "max": 150,
-                "min": 100
+                "max": int(data['max_price']),
+                "min": int(data['min_price'])
             }
         }
     }

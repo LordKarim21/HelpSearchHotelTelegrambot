@@ -5,7 +5,7 @@ from handlers.basic_handlers.lowprice import lowprice
 from handlers.basic_handlers.best_deal import bestdeal
 from utils.hotel_num.hotel_num import get_hotel_num
 from loader import bot
-from utils.range_price.get_max_and_min_price import get_max_price
+from handlers.basic_handlers.best_deal import get_max_price
 
 
 @bot.callback_query_handler(func=lambda call: "Id" in call.data)
