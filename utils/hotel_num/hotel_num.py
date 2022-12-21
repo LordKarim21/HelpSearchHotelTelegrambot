@@ -12,4 +12,5 @@ def get_hotel_num(message: Message) -> None:
         data = User.get_data_with_user(message.from_user.id)
         data['hotels_number_to_show'] = int(message.text) if int(message.text) != 0 else 5
     else:
-        bot.send_message(message.from_user.id, "Количесто фотографий дожно быть числом")
+        answer = bot.send_message(message.from_user.id, "Количесто фотографий дожно быть числом")
+        bot.register_next_step_handler(answer, get_hotel_num)

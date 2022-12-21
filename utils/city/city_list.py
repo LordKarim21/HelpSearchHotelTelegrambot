@@ -9,9 +9,13 @@ def get_inline_city(message: Message):
     response = location_search(city=message.text)
     print(response.json())
     if int(response.status_code) == 200:
-        question = 'Я нашёл для тебя следующие варианты...'
         keyboard = get_keyboard_city(response.json())
-        bot.send_message(message.from_user.id, text=question, reply_markup=keyboard)
+        if keyboard.keyboard:
+            question = 'Я нашёл для тебя следующие варианты...'
+            bot.send_message(message.from_user.id, text=question, reply_markup=keyboard)
+        else:
+            bot.edit_message_text(chat_id=message.chat.id, message_id=temp.id,
+                                  text='По вашему запросу ничего не найдено...\n/help', parse_mode='HTML')
     else:
         bot.edit_message_text(chat_id=message.chat.id, message_id=temp.id,
                               text='По вашему запросу ничего не найдено...\n/help', parse_mode='HTML')

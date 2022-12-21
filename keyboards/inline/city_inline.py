@@ -5,6 +5,7 @@ from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 def get_keyboard_city(city_data: Dict):
     keyboard = InlineKeyboardMarkup()
     for city in city_data['sr']:
+        print(city)
         if city['type'].lower() in ['city']:
             key = InlineKeyboardButton(
                 text=city['regionNames']['fullName'],

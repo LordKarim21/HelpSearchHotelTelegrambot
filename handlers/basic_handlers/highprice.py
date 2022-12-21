@@ -18,9 +18,6 @@ def start_highprice(message: Message):
     bot.register_next_step_handler(msg, get_inline_city)
 
 
-# Для команд lowprice, highprice и bestdeal сообщение с результатом команды должно
-# содержать краткую информацию по каждому отелю. В эту информацию как минимум
-# входит:
 # ● название отеля,
 # ● адрес,
 # ● как далеко расположен от центра,
@@ -31,8 +28,8 @@ def start_highprice(message: Message):
 def highprice(message: Message):
     response_json = hotels_search(get_data(message))
     data = User.get_data_with_user(message.from_user.id)
+    print(response_json)
     if "errors" not in response_json:
-        print(response_json)
         hotels_list: List[Dict] = response_json["data"]["propertySearch"]['properties']
         index_stop = data["hotels_number_to_show"]
         for hotel in hotels_list[:index_stop]:
@@ -48,8 +45,7 @@ def highprice(message: Message):
             else:
                 bot.send_message(message.from_user.id, text)
     else:
+        bot.send_message(message.from_user.id, "Ошибка, попбробуйте снова позже")
         errors_message = response_json['errors'][0]['message']
         code = response_json['errors'][0]['extensions']['code']
-        print(f"Название ошибки {errors_message}, причина ошибки {code}")
-        print(response_json)
-    print("Конец")
+        raise errors_message(code)
