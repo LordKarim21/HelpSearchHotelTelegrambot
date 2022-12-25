@@ -4,9 +4,9 @@ from config_data.contact_information import User
 from datetime import datetime
 
 
-def get_data(message: Message) -> Dict:
+def get_data_hotel(message: Message) -> Dict:
     data = User.get_data_with_user(message.from_user.id)
-    if data['command'] == 'lowprice':
+    if data['command'] != 'lowprice':
         sort = "PRICE_LOW_TO_HIGH"
     else:
         sort = "RECOMMENDED"

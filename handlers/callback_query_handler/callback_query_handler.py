@@ -24,15 +24,15 @@ def get_city(call: CallbackQuery) -> None:
 
 @bot.callback_query_handler(func=lambda call: call.data in ["True", "False"])
 def get_position_photo(call: CallbackQuery) -> None:
-    bot.send_message(call.from_user.id, "Спасибо, записал. \nГотово")
+    msg = bot.send_message(call.from_user.id, "Спасибо, записал. \nГотово(напишите что нибудь)")
     data = User.get_data_with_user(call.from_user.id)
     if call.data == "True":
         data['photos_uploaded']['status'] = True
         data['photos_uploaded']['number_of_photos'] = 10
         data["hotels_number_to_show"] = 10
     if data['command'] == "lowprice":
-        bot.register_next_step_handler(call.message, lowprice)
+        bot.register_next_step_handler(msg, lowprice)
     elif data['command'] == "highprice":
-        bot.register_next_step_handler(call.message, highprice)
+        bot.register_next_step_handler(msg, highprice)
     elif data['command'] == "bestdeal":
-        bot.register_next_step_handler(call.message, bestdeal)
+        bot.register_next_step_handler(msg, bestdeal)

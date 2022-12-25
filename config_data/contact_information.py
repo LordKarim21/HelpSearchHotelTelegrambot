@@ -9,23 +9,26 @@ class User:
         User.add_user(user_id=user_id)
 
     @classmethod
-    def get_default(cls, data: Dict) -> Dict:
-        data["command"] = ""
-        data["city"] = ""
-        data["region_id"] = 0
-        data["hotels_number_to_show"] = 0
-        data["photos_uploaded"] = {"status": False, "number_of_photos": 0}
-        data["min_price"] = 0
-        data["max_price"] = 0
-        data["distance_from_center"] = ""
-        data["arrival_date"] = ""
-        data["departure_date"] = ""
+    def get_default(cls) -> Dict:
+        data = {
+            "property_id": "",
+            "command": "",
+            "city": "",
+            "region_id": 0,
+            "hotels_number_to_show": 0,
+            "photos_uploaded": {"status": False, "number_of_photos": 5},
+            "min_price": 0,
+            "max_price": 0,
+            "distance_from_center": "",
+            "arrival_date": "",
+            "departure_date": ""
+        }
         return data
 
     @classmethod
     def add_user(cls, user_id):
         if user_id not in cls.all_users.keys():
-            cls.all_users[user_id] = cls.get_default({})
+            cls.all_users[user_id] = cls.get_default()
 
     @classmethod
     def get_data_with_user(cls, user_id):
