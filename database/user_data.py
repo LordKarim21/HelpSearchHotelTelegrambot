@@ -22,7 +22,7 @@ def get_history(user_id: int) -> List[str]:
                 history_to_show.append(f"{count_history}."
                                        f"Дата и время обращения: {history.time_request}\n"
                                        f"Команда поиска :{history.command_name}\n"
-                                       f"Найденный отель:{history.hotels_name}\n")
+                                       f"Найденный отели:{history.hotels_name}\n")
                 count_history += 1
         else:
             history_to_show = ['Ваша история поиска пуста!']

@@ -23,3 +23,8 @@ if __name__ == '__main__':
     bot.add_custom_filter(StateFilter(bot))
     set_default_commands(bot)
     bot.infinity_polling()
+
+    # Формат URL-адреса страницы отеля выглядит следующим образом :
+    #
+    # https://www.hotels.com/h {новый идентификатор свойства}.Информация об отеле
+    # Пример : https://www.hotels.com/h12325893 .Информация об отеле

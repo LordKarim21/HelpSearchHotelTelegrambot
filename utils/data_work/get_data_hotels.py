@@ -6,8 +6,10 @@ from datetime import datetime
 
 def get_data_hotel(message: Message) -> Dict:
     data = User.get_data_with_user(message.from_user.id)
-    if data['command'] != 'lowprice':
+    if data['command'] == 'lowprice':
         sort = "PRICE_LOW_TO_HIGH"
+    elif data['command'] == 'highprice':
+        sort = "PROPERTY_CLASS"
     else:
         sort = "RECOMMENDED"
     payload = {

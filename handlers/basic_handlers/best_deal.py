@@ -1,6 +1,7 @@
 from typing import Dict, List
 from telebot.types import Message, InputMediaPhoto
 from config_data.contact_information import User
+from database.user_data import set_history
 from loader import bot
 from utils.city.city_list import get_inline_city
 from utils.data_work.get_data_hotel_detail import get_data
@@ -53,15 +54,17 @@ def get_range_distance(message: Message):
 
 
 def bestdeal(message: Message):  # Поменят
+    print("bestdeal")
     response_json = hotels_search(get_data_hotel(message))
     data = User.get_data_with_user(message.from_user.id)
+    hotels_name_list = []
     if "errors" not in response_json:
-        print(response_json)
         hotels_list: List[Dict] = response_json["data"]["propertySearch"]['properties']
         index_stop = data["hotels_number_to_show"]
         for hotel in hotels_list[:index_stop]:
             data['property_id'] = hotel['id']
             hotel_name = hotel['name']
+            hotels_name_list.append(hotel_name)
             lat_long = str(hotel["mapMarker"]['latLong']['longitude']) + " miles"
             neighborhood = hotel['neighborhood']['name']
             price = hotel["price"]["displayMessages"][0]["lineItems"][0]["price"]["formatted"]
@@ -76,8 +79,11 @@ def bestdeal(message: Message):  # Поменят
                 bot.send_media_group(message.chat.id, hotel_images, text)
             else:
                 bot.send_message(message.from_user.id, text)
+        set_history(command_name=data['command'],
+                    hotels_name=', '.join(hotels_name_list), user_id=message.from_user.id)
     else:
         bot.send_message(message.from_user.id, "Ошибка, попбробуйте снова позже")
         errors_message = response_json['errors'][0]['message']
         code = response_json['errors'][0]['extensions']['code']
-        raise errors_message(code)
+        if errors_message == "'Execute GraphQL failed.'":
+            raise Exception(code, errors_message)
