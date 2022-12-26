@@ -23,6 +23,7 @@ def get_city(call: CallbackQuery) -> None:
     else:
         msg = bot.send_message(chat_id=call.message.chat.id, text='Введите вашу высокую цену')
         bot.register_next_step_handler(msg, get_max_price)
+    bot.answer_callback_query(callback_query_id=call.id)
 
 
 @bot.callback_query_handler(func=lambda call: call.data in ["True", "False"])
@@ -59,3 +60,4 @@ def get_position_photo(call: CallbackQuery) -> None:
             code = response_json['errors'][0]['extensions']['code']
             if errors_message == "'Execute GraphQL failed.'":
                 raise Exception(code, errors_message)
+    bot.answer_callback_query(callback_query_id=call.id)
