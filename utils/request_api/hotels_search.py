@@ -12,7 +12,7 @@ def hotels_search(params: Dict):
         "X-RapidAPI-Host": config.HOST_API
     }
     response = requests.request(method=method, url=url, json=params, headers=headers)
-    if response.status_code != 204:
+    try:
         return response.json()
-    else:
-        raise TypeError
+    except Exception:
+        return None
