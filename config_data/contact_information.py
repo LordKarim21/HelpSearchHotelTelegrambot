@@ -15,7 +15,6 @@ class User:
             "command": "",
             "city": "",
             "region_id": 0,
-            "hotels_number_to_show": 0,
             "photos_uploaded": {"status": False, "number_of_photos": 5},
             "min_price": 0,
             "max_price": 0,

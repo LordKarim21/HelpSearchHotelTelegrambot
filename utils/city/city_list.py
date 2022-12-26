@@ -7,7 +7,6 @@ from utils.request_api.location_search import location_search
 def get_inline_city(message: Message):
     temp = bot.send_message(chat_id=message.chat.id, text='Выполняю поиск...', parse_mode='HTML')
     response = location_search(city=message.text)
-    print(response.json())
     if int(response.status_code) == 200:
         keyboard = get_keyboard_city(response.json())
         if keyboard.keyboard:

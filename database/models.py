@@ -1,6 +1,5 @@
 import os
-from datetime import datetime
-from peewee import SqliteDatabase, Model, PrimaryKeyField, IntegerField, CharField, DateField
+from peewee import SqliteDatabase, Model, PrimaryKeyField, IntegerField, CharField, DateTimeField
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, 'test.db')
@@ -17,9 +16,9 @@ class BaseModel(Model):
 
 
 class History(BaseModel):
-    time_request = DateField(default=datetime.now)
-    command_name = CharField(null=True)
-    hotels_name = CharField(null=True)
+    time_request = DateTimeField()
+    command_name = CharField()
+    hotels_name = CharField()
 
 
 def create_db() -> None:

@@ -4,5 +4,5 @@ from loader import bot
 
 @bot.message_handler(content_types=['text'])
 def start_message_user(message: Message):
-    text = "Для начало введите команду /info_travel"
+    text = "Для начало введите команду /help"
     bot.send_message(message.from_user.id, text)
