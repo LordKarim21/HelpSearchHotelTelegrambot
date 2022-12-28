@@ -1,5 +1,5 @@
 import os
-from peewee import SqliteDatabase, Model, PrimaryKeyField, IntegerField, CharField, DateTimeField
+from peewee import SqliteDatabase, Model, PrimaryKeyField, IntegerField, CharField, DateTimeField, BooleanField
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, 'test.db')
@@ -21,6 +21,20 @@ class History(BaseModel):
     hotels_name = CharField()
 
 
+class User(BaseModel):
+    property_id = IntegerField(null=True)
+    command = CharField(null=True)
+    region_id = IntegerField(null=True)
+    photos_status = BooleanField(null=True)
+    number_of_photos = IntegerField(null=True)
+    min_price = IntegerField(null=True)
+    max_price = IntegerField(null=True)
+    distance_from_center = CharField(null=True)
+    arrival_date = CharField(null=True)
+    departure_date = CharField(null=True)
+    hotels_number_to_show = IntegerField(null=True)
+
+
 def create_db() -> None:
     """
     Функция создает базу данных, если она отсутствует.
@@ -28,6 +42,7 @@ def create_db() -> None:
     """
     with my_db:
         History.create_table()
+        User.create_table()
         print("Готово")
 
 

@@ -1,6 +1,4 @@
 from typing import Dict
-from telebot.types import Message
-from config_data.contact_information import User
 
 
 def get_data(property_id: int) -> Dict:

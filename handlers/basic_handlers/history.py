@@ -1,6 +1,6 @@
 from telebot.types import Message
 from loader import bot
-from database.user_data import get_history, clear_history
+from database.history_data import get_history, clear_history
 
 
 @bot.message_handler(commands=['history'])
