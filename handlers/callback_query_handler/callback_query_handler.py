@@ -52,13 +52,14 @@ def get_data(call: CallbackQuery):
 
 @bot.callback_query_handler(func=lambda call: call.data in ["True", "False"])
 def get_position_photo(call: CallbackQuery) -> None:
-    bot.answer_callback_query(callback_query_id=call.id)
-    bot.send_message(chat_id=call.message.chat.id, text="Все готово")
+
     if call.data == "True":
         msg = bot.send_message(call.from_user.id, "Введите количество фотографий")
         bot.register_next_step_handler(msg, get_photo_amount)
     else:
-        response_json = hotels_search(get_data_hotel(call.message))
+        bot.send_message(chat_id=call.message.chat.id, text="Все готово")
+        response_json = hotels_search(get_data_hotel(call.from_user.id))
+        print(response_json)
         if response_json is not None:
             hotels_name_list = []
             if "errors" not in response_json:

@@ -15,6 +15,7 @@ def get_photo_amount(message: Message):
         set_number_of_photos(message.from_user.id, int(message.text))
         response_json = hotels_search(get_data_hotel(message))
         if response_json is not None:
+            bot.send_message(chat_id=message.chat.id, text="Все готово")
             hotels_name_list = []
             if "errors" not in response_json:
                 hotels_list: List[Dict] = response_json["data"]["propertySearch"]['properties']

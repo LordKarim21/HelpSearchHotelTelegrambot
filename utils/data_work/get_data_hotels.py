@@ -1,26 +1,25 @@
 from typing import Dict
-from telebot.types import Message
 from database.user_data import get_command, get_arrival_date, get_departure_date, get_region_id, get_max_price, \
     get_min_price
 
 
-def get_data_hotel(message: Message) -> Dict:
-    cmd: str = get_command(message.from_user.id)
+def get_data_hotel(user_id) -> Dict:
+    cmd: str = get_command(user_id)
     if cmd == 'lowprice':
         sort = "PRICE_LOW_TO_HIGH"
     elif cmd == 'highprice':
         sort = "PROPERTY_CLASS"
     else:
         sort = "RECOMMENDED"
-    in_date_year, in_date_month, in_date_day = get_arrival_date(message.from_user.id).split("-")
-    out_date_year, out_date_month, out_date_day = get_departure_date(message.from_user.id).split("-")
+    in_date_year, in_date_month, in_date_day = get_arrival_date(user_id).split("-")
+    out_date_year, out_date_month, out_date_day = get_departure_date(user_id).split("-")
     payload = {
-        "currency": 'USD',
+        "currency": "USD",
         "eapid": 1,
-        "locale": 'en_US',
+        "locale": "en_US",
         "siteId": 300000001,
         "destination": {
-            "regionId": get_region_id(message.from_user.id)
+            "regionId": str(get_region_id(user_id))
         },
         "checkInDate": {
             "day": int(in_date_day),
@@ -42,9 +41,10 @@ def get_data_hotel(message: Message) -> Dict:
         "sort": sort,
         "filters": {
             "price": {
-                "max": get_max_price(message.from_user.id),
-                "min": get_min_price(message.from_user.id)
+                "max": int(get_max_price(user_id)),
+                "min": int(get_min_price(user_id))
             }
         }
     }
+    print(payload)
     return payload
