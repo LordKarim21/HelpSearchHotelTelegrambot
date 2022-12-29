@@ -4,3 +4,4 @@ from . import img
 from . import hotel_num
 from . import city
 from . import date
+from . import response

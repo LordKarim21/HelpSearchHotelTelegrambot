@@ -3,7 +3,7 @@ from database.user_data import get_command, get_arrival_date, get_departure_date
     get_min_price
 
 
-def get_data_hotel(user_id) -> Dict:
+def get_data_hotel(user_id: int) -> Dict:
     cmd: str = get_command(user_id)
     if cmd == 'lowprice':
         sort = "PRICE_LOW_TO_HIGH"
