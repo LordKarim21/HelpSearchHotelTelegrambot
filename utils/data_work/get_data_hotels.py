@@ -11,6 +11,8 @@ def get_data_hotel(user_id) -> Dict:
         sort = "PROPERTY_CLASS"
     else:
         sort = "RECOMMENDED"
+    min_price, max_price = (int(get_min_price(user_id)), int(get_max_price(user_id))) \
+        if get_min_price(user_id) < get_max_price(user_id) else (get_max_price(user_id), int(get_min_price(user_id)))
     in_date_year, in_date_month, in_date_day = get_arrival_date(user_id).split("-")
     out_date_year, out_date_month, out_date_day = get_departure_date(user_id).split("-")
     payload = {
@@ -41,8 +43,8 @@ def get_data_hotel(user_id) -> Dict:
         "sort": sort,
         "filters": {
             "price": {
-                "max": int(get_max_price(user_id)),
-                "min": int(get_min_price(user_id))
+                "max": max_price,
+                "min": min_price
             }
         }
     }
