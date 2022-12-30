@@ -27,7 +27,12 @@ def delete_user(user_id: int) -> None:
             user.delete_instance()
 
 
-def get_hotels_number_to_show(user_id: int):
+def get_count_days(user_id: int) -> int:
+    user = User.select().where(user_id == User.user_telegram_id).order_by(User.id.desc()).get()
+    return user.count_days
+
+
+def get_hotels_number_to_show(user_id: int) -> int:
     user = User.select().where(user_id == User.user_telegram_id).order_by(User.id.desc()).get()
     return user.hotels_number_to_show
 
@@ -80,6 +85,11 @@ def get_arrival_date(user_id: int) -> str:
 def get_departure_date(user_id: int) -> str:
     user = User.select().where(user_id == User.user_telegram_id).order_by(User.id.desc()).get()
     return str(user.departure_date)
+
+
+def set_count_days(user_id: int, count_days: int) -> None:
+    user = User.update({User.count_days: count_days}).where(user_id == User.user_telegram_id)
+    user.execute()
 
 
 def set_hotels_number_to_show(user_id: int, num: int) -> None:

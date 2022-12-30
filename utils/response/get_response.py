@@ -2,7 +2,7 @@ from typing import List, Dict
 from telebot.types import Message, InputMediaPhoto
 from database.history_data import set_history
 from database.user_data import get_hotels_number_to_show, set_property_id, get_command, get_photos_status, \
-    get_number_of_photos, get_distance_from_center
+    get_number_of_photos, get_distance_from_center, get_count_days
 from keyboards.inline.create_url_keyboard import get_keyboard_url
 from loader import bot
 from utils.converter.convert_mile_in_km import convert_mile_in_km
@@ -27,7 +27,7 @@ def response_hotels(message: Message):
             count_hotels = 0
             for hotel in hotels_list:
                 count_hotels += 1
-                if count_hotels == index_stop:
+                if count_hotels == index_stop + 1:
                     break
                 property_id = hotel['id']
                 keyboard = get_keyboard_url(property_id)
@@ -37,9 +37,11 @@ def response_hotels(message: Message):
                 destination_miles = hotel["destinationInfo"]['distanceFromDestination']['value']
                 neighborhood = hotel['neighborhood']['name']
                 destination_km = convert_mile_in_km(destination_miles)
-                price = hotel["price"]["displayMessages"][0]["lineItems"][0]["price"]["formatted"]
+                count_day = get_count_days(message.chat.id)
+                price: str = hotel["price"]["displayMessages"][0]["lineItems"][0]["price"]["formatted"]
+                price_day = count_day * int(price.strip().replace('$', ''))
                 text = f"Название: {hotel_name}\nKак далеко расположен от центра: {round(destination_km, 2)} км" \
-                       f"\nЦена: {price}\nРайон: {neighborhood}"
+                       f"\nЦена за ночь: {price}\nЦена за всё время проживания: {price_day}$\nРайон: {neighborhood}"
                 if command_name == "bestdeal":
                     if abs(float(get_distance_from_center(message.chat.id))) <= \
                             abs(float(destination_km)):

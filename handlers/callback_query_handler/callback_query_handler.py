@@ -49,7 +49,6 @@ def get_data(call: CallbackQuery):
 
 @bot.callback_query_handler(func=lambda call: call.data in ["True", "False"])
 def get_position_photo(call: CallbackQuery) -> None:
-
     if call.data == "True":
         msg = bot.send_message(call.from_user.id, "Введите количество фотографий")
         bot.register_next_step_handler(msg, get_photo_amount)

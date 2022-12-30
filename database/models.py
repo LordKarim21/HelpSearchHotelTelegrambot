@@ -33,6 +33,7 @@ class User(BaseModel):
     arrival_date = CharField(null=True)
     departure_date = CharField(null=True)
     hotels_number_to_show = IntegerField(null=True)
+    count_days = IntegerField(null=True)
 
 
 def create_db() -> None:
