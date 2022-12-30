@@ -10,7 +10,7 @@ def get_data_hotel(user_id: int) -> Dict:
     elif cmd == 'highprice':
         sort = "PROPERTY_CLASS"
     else:
-        sort = "RECOMMENDED"
+        sort = "DISTANCE"
     min_price, max_price = (int(get_min_price(user_id)), int(get_max_price(user_id))) \
         if get_min_price(user_id) < get_max_price(user_id) else (get_max_price(user_id), int(get_min_price(user_id)))
     in_date_year, in_date_month, in_date_day = get_arrival_date(user_id).split("-")
@@ -48,5 +48,4 @@ def get_data_hotel(user_id: int) -> Dict:
             }
         }
     }
-    print(payload)
     return payload

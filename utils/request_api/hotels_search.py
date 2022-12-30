@@ -12,7 +12,6 @@ def hotels_search(params: Dict):
         "X-RapidAPI-Host": config.HOST_API
     }
     response = requests.request(method=method, url=url, json=params, headers=headers)
-    print(response)
     try:
         return response.json()
     except Exception:

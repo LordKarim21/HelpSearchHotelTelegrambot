@@ -38,9 +38,8 @@ def get_property_id(user_id: int) -> int:
 
 
 def get_command(user_id: int) -> str:
-    print(user_id)
-    command = User.select(User.command).where(user_id == User.user_telegram_id).get()
-    return command
+    user = User.select().where(user_id == User.user_telegram_id).get()
+    return user.command
 
 
 def get_region_id(user_id: int) -> str:

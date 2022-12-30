@@ -54,5 +54,5 @@ def get_position_photo(call: CallbackQuery) -> None:
         msg = bot.send_message(call.from_user.id, "Введите количество фотографий")
         bot.register_next_step_handler(msg, get_photo_amount)
     else:
-        response_hotels(call.message, call.from_user.id)
+        response_hotels(call.message)
     bot.answer_callback_query(callback_query_id=call.id)
